@@ -13,28 +13,28 @@
 
 
         <ImageView
-            android:id="@+id/movieImageID"
+            android:id="@+id/pokeSprite"
             android:background="@android:color/background_dark"
             android:layout_width="90dp"
             android:layout_height="90dp" />
 
 
         <TextView
-            android:id="@+id/movieTitleID"
+            android:id="@+id/pokemonName"
             android:paddingLeft="5dp"
             android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@id/movieImageID"
-            android:text="Movie Title"
+            android:layout_toRightOf="@id/pokeSprite"
+            android:text="Pokemon:"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/movieReleaseID"
+            android:id="@+id/pokeMoto"
             android:padding="5dp"
-            android:layout_toRightOf="@id/movieImageID"
-            android:text="Released:"
-            android:layout_below="@id/movieTitleID"
+            android:layout_toRightOf="@id/pokeSprite"
+            android:text="Moto:"
+            android:layout_below="@id/pokemonName"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -42,9 +42,9 @@
         <TextView
             android:id="@+id/movieCatID"
             android:padding="5dp"
-            android:text="Category"
-            android:layout_below="@id/movieReleaseID"
-            android:layout_toRightOf="@id/movieImageID"
+            android:text="Types:"
+            android:layout_below="@id/pokeMoto"
+            android:layout_toRightOf="@id/pokeSprite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
