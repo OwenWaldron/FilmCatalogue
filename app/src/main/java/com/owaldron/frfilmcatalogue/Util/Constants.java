@@ -1,5 +1,6 @@
 package com.owaldron.frfilmcatalogue.Util;
 
 public class Constants {
-    //empty for now
+    public static final String URL1 = "https://pokeapi.co/api/v2/pokemon/";
+    public static final String URL2 = "https://pokeapi.co/api/v2/characteristic/";
 }
