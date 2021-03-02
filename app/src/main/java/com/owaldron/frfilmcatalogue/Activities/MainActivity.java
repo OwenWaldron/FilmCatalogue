@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Pokemon> getMovies(String searchTerm) {
         pokemonList.clear();
-
+        Log.d("URL: ",Constants.URL1 + searchTerm+"/");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 Constants.URL1 + searchTerm+"/",
                 null, new Response.Listener<JSONObject>() {
