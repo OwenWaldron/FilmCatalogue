@@ -33,7 +33,7 @@
             android:id="@+id/pokeMoto"
             android:padding="5dp"
             android:layout_toRightOf="@id/pokeSprite"
-            android:text="Moto:"
+            android:text="Espece:"
             android:layout_below="@id/pokemonName"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package com.owaldron.frfilmcatalogue.Activities;
 
 import android.os.Bundle;
 
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,16 +15,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.android.volley.*;
 import com.owaldron.frfilmcatalogue.Util.Constants;
-
+import com.owaldron.frfilmcatalogue.Util.Prefs;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         pokemonList  = new ArrayList<>();
+
+        Prefs prefs=new Prefs(MainActivity.this);
+        String search = prefs.getSearch();
+
+        pokemonList=getMovies(search);
+        movieRecyclerViewAdapter = new MovieRecyclerViewAdapter(this,pokemonList);
+        recyclerView.setAdapter(movieRecyclerViewAdapter);
+        movieRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     public List<Pokemon> getMovies(String searchTerm) {
@@ -69,12 +78,27 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 
                 try {
-                    JSONArray moviesArray = response.getJSONArray("Search");
-
-                    for (int i = 0; i < moviesArray.length(); i++) {
-
-
+                    Pokemon poke = new Pokemon();
+                    String name = response.getString("name");
+                    poke.setName(name.substring(0,1).toUpperCase()+name.substring(1,name.length()));
+                    String species  = response.getJSONObject("species").getString("name");
+                    poke.setMoto(species);
+                    String poster = response.getJSONObject("sprites").getString("front_default");
+                    poke.setSprite(poster);
+                    JSONArray types = response.getJSONArray("types");
+                    String type ="";
+                    for (int i=0;i<types.length();i++) {
+                        String temp = types.getJSONObject(i).getString("type");
+                        if (i==0) {
+                            type=temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
+                        } else {
+                            type=", "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
+                        }
                     }
+                    poke.setTypes(type);
+                    poke.setPokeid(response.getInt("id"));
+                    Log.d("Name: ",name);
+                    pokemonList.add(poke);
 
                     // pour mettre à jour les résultats de la recherche
                     movieRecyclerViewAdapter.notifyDataSetChanged();
@@ -94,13 +118,6 @@ public class MainActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
 
         return pokemonList;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     @Override
