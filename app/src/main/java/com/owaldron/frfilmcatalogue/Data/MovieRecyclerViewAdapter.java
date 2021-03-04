@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.owaldron.frfilmcatalogue.Model.Pokemon;
 import com.owaldron.frfilmcatalogue.R;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
@@ -31,7 +29,6 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.film,parent,false);
         return new ViewHolder(view,context);
-
     }
 
     @Override
@@ -40,14 +37,16 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         String spriteLink = pokemon.getSprite();
 
         holder.title.setText(pokemon.getName());
-        holder.type.setText(pokemon.getMoto());
+        holder.type.setText(pokemon.getTypes());
 
+        Picasso.get().setLoggingEnabled(true);
         Picasso.get()
-                .load(spriteLink)
+                .load("https://cdn.traction.one/pokedex/pokemon/1.png")
                 .fit()
                 .placeholder(android.R.drawable.ic_btn_speak_now)
                 .into(holder.poster);
-        holder.year.setText(pokemon.getTypes());
+
+        holder.moto.setText(pokemon.getMoto());
     }
 
     @Override
@@ -59,7 +58,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
         TextView title;
         ImageView poster;
-        TextView year;
+        TextView moto;
         TextView type;
 
         public ViewHolder(@NonNull View itemView, Context ctx) {
@@ -68,7 +67,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
             title = itemView.findViewById(R.id.pokemonName);
             poster = itemView.findViewById(R.id.pokeSprite);
-            year = itemView.findViewById(R.id.pokeMoto);
+            moto = itemView.findViewById(R.id.pokeMoto);
             type = itemView.findViewById(R.id.movieCatID);
 
             itemView.setOnClickListener(new View.OnClickListener() {

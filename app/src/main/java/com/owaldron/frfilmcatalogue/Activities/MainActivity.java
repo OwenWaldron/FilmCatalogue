@@ -82,22 +82,25 @@ public class MainActivity extends AppCompatActivity {
                     String name = response.getString("name");
                     poke.setName(name.substring(0,1).toUpperCase()+name.substring(1,name.length()));
                     String species  = response.getJSONObject("species").getString("name");
-                    poke.setMoto(species);
+                    poke.setMoto("Espece: "+species.substring(0,1).toUpperCase()+species.substring(1,species.length()));
                     String poster = response.getJSONObject("sprites").getString("front_default");
                     poke.setSprite(poster);
                     JSONArray types = response.getJSONArray("types");
                     String type ="";
                     for (int i=0;i<types.length();i++) {
-                        String temp = types.getJSONObject(i).getString("type");
+                        String temp = types.getJSONObject(i).getJSONObject("type").getString("name");
                         if (i==0) {
-                            type=temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
+                            type="Type(s): "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
                         } else {
-                            type=", "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
+                            type=type+", "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
                         }
                     }
                     poke.setTypes(type);
                     poke.setPokeid(response.getInt("id"));
                     Log.d("Name: ",name);
+                    Log.d("Types: ",type);
+                    Log.d("Species: ",species);
+                    Log.d("Poster: ", poster);
                     pokemonList.add(poke);
 
                     // pour mettre à jour les résultats de la recherche
