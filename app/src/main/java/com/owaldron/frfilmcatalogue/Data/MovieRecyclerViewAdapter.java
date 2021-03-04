@@ -41,7 +41,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
         Picasso.get().setLoggingEnabled(true);
         Picasso.get()
-                .load("https://cdn.traction.one/pokedex/pokemon/1.png")
+                .load("https://cdn.traction.one/pokedex/pokemon/"+pokemon.getPokeid()+".png")
                 .fit()
                 .placeholder(android.R.drawable.ic_btn_speak_now)
                 .into(holder.poster);

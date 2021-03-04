@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         pokemonList.clear();
         Log.d("URL: ",Constants.URL1 + searchTerm+"/");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.URL1 + searchTerm+"/",
+                Constants.URL1 + searchTerm,
                 null, new Response.Listener<JSONObject>() {
 
             @Override
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int i=0;i<types.length();i++) {
                         String temp = types.getJSONObject(i).getJSONObject("type").getString("name");
                         if (i==0) {
-                            type="Type(s): "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
+                            type="Types: "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
                         } else {
                             type=type+", "+temp.substring(0,1).toUpperCase()+temp.substring(1,temp.length());
                         }
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Name: ",name);
                     Log.d("Types: ",type);
                     Log.d("Species: ",species);
-                    Log.d("Poster: ", poster);
                     pokemonList.add(poke);
 
                     // pour mettre à jour les résultats de la recherche
