@@ -1,6 +1,7 @@
 package com.owaldron.frfilmcatalogue.Data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.owaldron.frfilmcatalogue.Activities.DetailsActivity;
 import com.owaldron.frfilmcatalogue.Model.Pokemon;
 import com.owaldron.frfilmcatalogue.R;
 import com.squareup.picasso.Picasso;
@@ -61,7 +64,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         TextView moto;
         TextView type;
 
-        public ViewHolder(@NonNull View itemView, Context ctx) {
+        public ViewHolder(@NonNull View itemView, final Context ctx) {
             super(itemView);
             context=ctx;
 
@@ -73,7 +76,12 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"nice click",Toast.LENGTH_LONG).show();
+                    Pokemon poke = pokemons.get(getAdapterPosition());
+
+                    Intent intent = new Intent (context, DetailsActivity.class);
+
+                    intent.putExtra("pokemon",poke);
+                    ctx.startActivity(intent);
                 }
             });
         }

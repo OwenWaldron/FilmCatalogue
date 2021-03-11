@@ -8,10 +8,28 @@ public class Pokemon implements Serializable {
     private String name;
     private String types;
     private int pokeid;
-    private int height;
-    private int weight;
+    private String height;
+    private String weight;
+    private String desc;
     private String sprite;
     private String moto;
+    private int gen;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public int getGen() {
+        return gen;
+    }
+
+    public void setGen(int gen) {
+        this.gen = gen;
+    }
 
     public static long getId() {
         return id;
@@ -41,19 +59,19 @@ public class Pokemon implements Serializable {
         this.pokeid = pokeid;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
