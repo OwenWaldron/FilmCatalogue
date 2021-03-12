@@ -19,6 +19,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+
 import com.android.volley.*;
 import com.owaldron.frfilmcatalogue.Util.Constants;
 import com.owaldron.frfilmcatalogue.Util.Prefs;
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MovieRecyclerViewAdapter movieRecyclerViewAdapter;
     private List<Pokemon> pokemonList;
     private RequestQueue queue;
-    private AlertDialog.Builder alertDialogueBuilder;
+    private AlertDialog.Builder alertDialogBuilder;
     private AlertDialog dialog;
 
     @Override
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                showInpurDialogue();
             }
         });
 
@@ -60,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         Prefs prefs=new Prefs(MainActivity.this);
         String search = prefs.getSearch();
-
-        pokemonList=getMovies(search);
+        for (int i = 0; i < 50; i++)
+        {
+            pokemonList.addAll(getMovies(Integer.toString(i)));
+        }
         movieRecyclerViewAdapter = new MovieRecyclerViewAdapter(this,pokemonList);
         recyclerView.setAdapter(movieRecyclerViewAdapter);
         movieRecyclerViewAdapter.notifyDataSetChanged();
@@ -131,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.new_search) {
-            return true;
+            showInpurDialogue();
         }
 
         return super.onOptionsItemSelected(item);
@@ -139,6 +144,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void showInpurDialogue()
     {
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_view, null);
+        final EditText newSearchEdt = view.findViewById(R.id.searchEdt);
+        Button submitButton = view.findViewById(R.id.submitButton);
 
+        alertDialogBuilder.setView(view);
+        dialog = alertDialogBuilder.create();
+        dialog.show();
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // trouver les préferences sauvegardées
+                Prefs prefs = new Prefs(MainActivity.this);
+
+                if (!newSearchEdt.getText().toString().isEmpty()) {
+
+                    String search = newSearchEdt.getText().toString();
+                    prefs.setSearch(search);
+                    pokemonList.clear();
+
+                    getMovies(search);
+                }
+                dialog.dismiss();
+
+
+            }
+        });
     }
 }
